@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import folder_icon from "../images/folder.png";
+import folder_icon from "../images/index";
 import file_icon from "../images/file_icone.png";
 
 export default function Item({
