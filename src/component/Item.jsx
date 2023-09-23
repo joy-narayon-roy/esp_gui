@@ -1,6 +1,8 @@
 import React, { useRef } from "react";
-import folder_icon from "../images/index";
+// import folder_icon from "../images/folder.png";
 import file_icon from "../images/file_icone.png";
+const folder_icon =
+  "https://firebasestorage.googleapis.com/v0/b/files-997ba.appspot.com/o/folder.png?alt=media&token=e3369548-eaed-47cc-9666-4f81190c995c";
 
 export default function Item({
   items,
