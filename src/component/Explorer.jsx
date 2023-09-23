@@ -6,6 +6,7 @@ import list_icon from "../images/list.png";
 import Item from "./Item";
 import { useRef } from "react";
 import Popup from "./Popup";
+import ids from "../utilities/id";
 
 export default function Explorer() {
   const [showPopup, setShowPopup] = useState(false);
@@ -40,17 +41,17 @@ export default function Explorer() {
   useEffect(() => {
     async function getData() {
       try {
-        // const url = "http://192.168.1.5";
+        const url = "http://192.168.1.5";
         const query = new URLSearchParams();
         query.set("path", path);
-        const res = await fetch(`/goto?${query.toString()}`);
+        const res = await fetch(`${url}/goto?${query.toString()}`);
         if (res.status > 300) {
           throw res;
         }
         let data = await res.json();
         data = data.sort();
         data = data.reduce((pre, curr) => {
-          const id = crypto.randomUUID();
+          const id = ids.next().value;
           let item = curr.split(".");
           if (item.length === 1) {
             pre[id] = {
@@ -73,6 +74,7 @@ export default function Explorer() {
           }
           return pre;
         }, {});
+        
         // data = data.sort((next, curr) => {
         //   if (next.type === "dir" && curr.type === "file") {
         //     return -1;
