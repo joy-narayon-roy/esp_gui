@@ -40,7 +40,7 @@ export default function Explorer() {
   useEffect(() => {
     async function getData() {
       try {
-        const url = "http://192.168.1.5";
+        // const url = "http://192.168.1.5";
         const query = new URLSearchParams();
         query.set("path", path);
         const res = await fetch(`/goto?${query.toString()}`);
