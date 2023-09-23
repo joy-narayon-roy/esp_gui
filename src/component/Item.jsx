@@ -19,7 +19,12 @@ export default function Item({
 
   return (
     <div ref={itemRef} onClick={handelClick} className={`item`}>
-      <img src={type === "dir" ? folder_icon : file_icon} alt="" />
+      {type === "dir" ? (
+        <img src={folder_icon} alt="" />
+      ) : (
+        <img src={file_icon} alt="" />
+      )}
+
       <span className="name">{name}</span>
     </div>
   );
