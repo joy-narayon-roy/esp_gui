@@ -42,7 +42,7 @@ export default function Explorer() {
     async function getData() {
       try {
         // const url = "http://192.168.1.5";
-        const url = window.location.href;
+        const url = window.location.hostname;
         const query = new URLSearchParams();
         query.set("path", path);
         const res = await fetch(`${url}/goto?${query.toString()}`);
