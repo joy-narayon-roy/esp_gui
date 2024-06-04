@@ -41,46 +41,44 @@ export default function Explorer() {
   useEffect(() => {
     async function getData() {
       try {
-        const url = "http://192.168.1.5";
+        // const url = "http://192.168.1.5";
+        const url = window.location.href;
         const query = new URLSearchParams();
         query.set("path", path);
         const res = await fetch(`${url}/goto?${query.toString()}`);
+        // console.log(res);
         if (res.status > 300) {
           throw res;
         }
         let data = await res.json();
         data = data.sort();
-        data = data.reduce((pre, curr) => {
-          const id = ids.next().value;
-          let item = curr.split(".");
-          if (item.length === 1) {
-            pre[id] = {
-              name: curr,
-              type: "dir",
-              selected: false,
-            };
-          } else if (item[0] === "" && item.length > 1) {
-            pre[id] = {
-              name: curr,
-              type: "dir",
-              selected: false,
-            };
-          } else {
-            pre[id] = {
-              name: curr,
-              type: "file",
-              selected: false,
-            };
-          }
-          return pre;
-        }, {});
-        
-        // data = data.sort((next, curr) => {
-        //   if (next.type === "dir" && curr.type === "file") {
-        //     return -1;
-        //   }
-        //   return 1;
-        // });
+        data = data.reduce(
+          (pre, curr) => {
+            const id = ids.next().value;
+            let item = curr.split(".");
+            if (item.length === 1) {
+              pre.dir[id] = {
+                name: curr,
+                type: "dir",
+                selected: false,
+              };
+            } else if (item[0] === "" && item.length > 1) {
+              pre.dir[id] = {
+                name: curr,
+                type: "dir",
+                selected: false,
+              };
+            } else {
+              pre.file[id] = {
+                name: curr,
+                type: "file",
+                selected: false,
+              };
+            }
+            return pre;
+          },
+          { file: {}, dir: {} }
+        );
 
         setLoading(false);
         setItems(data);
@@ -134,13 +132,23 @@ export default function Explorer() {
           {loading && <h3>Loading</h3>}
           {error && <h3>Error</h3>}
           {!loading && !error && !items && <h3>Empty Folder</h3>}
-          {!loading && !error && items && (
+          {!loading && !error && items.dir && (
             <div className="items">
-              {Object.keys(items).map((itemId, ind) => (
+              {Object.keys(items.dir).map((itemId, ind) => (
                 <Item
                   key={ind}
                   itemId={itemId}
-                  items={items}
+                  items={items.dir}
+                  selected={selected}
+                  setSelected={setSelected}
+                  gotoPath={gotoPath}
+                />
+              ))}
+              {Object.keys(items.file).map((itemId, ind) => (
+                <Item
+                  key={ind}
+                  itemId={itemId}
+                  items={items.file}
                   selected={selected}
                   setSelected={setSelected}
                   gotoPath={gotoPath}

@@ -1,20 +1,20 @@
 import React from "react";
 import UploadFile from "./popups/UploadFile";
 
-function getPopup(showPopup, setShowPopup) {
+function getPopup(showPopup, setShowPopup, path) {
   switch (showPopup) {
     case "uf":
-      return <UploadFile setShowPopup={setShowPopup} />;
+      return <UploadFile path={path} setShowPopup={setShowPopup} />;
 
     default:
       return <></>;
   }
 }
 
-export default function Popup({ showPopup, setShowPopup }) {
+export default function Popup({ showPopup, setShowPopup, path }) {
   return (
     <div className={`popup ${showPopup && "show"}`}>
-      {getPopup(showPopup, setShowPopup)}
+      {getPopup(showPopup, setShowPopup, path)}
     </div>
   );
 }

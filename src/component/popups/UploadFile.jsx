@@ -4,10 +4,8 @@ export default function UploadFile() {
   const [files, setfiles] = useState("");
   async function handelUpload() {
     const formData = new FormData();
-    // files.forEach((file) => {
-    //   formData.append("files", file);
-    // });
     formData.append("file", files[0]);
+    formData.append("path",)
     const res = await fetch("/file", {
       method: "POST",
       body: formData,
